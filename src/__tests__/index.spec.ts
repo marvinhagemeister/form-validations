@@ -251,8 +251,8 @@ describe("normalizeBoolean", () => {
     t.equal(test([]), false);
     t.equal(test({}), false);
 
-    t.throws(() => test("falsea"));
-    t.throws(() => test(["asd"]));
-    t.throws(() => test({ foo: "bar" }));
+    t.equal(test("falsea"), false);
+    t.equal(test(["asd"]), false);
+    t.equal(test({ foo: "bar" }), false);
   });
 });

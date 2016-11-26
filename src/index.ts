@@ -102,9 +102,5 @@ export function normalizeBoolean(val: any): boolean {
     return JSON.parse(val); // We"re safe here because of the if statement"
   }
 
-  if (isNullOrUndef(val) || isEmpty(val)) {
-    return false;
-  }
-
-  throw new TypeError("cannot normalize: " + val + " to boolean");
+  return false;
 }
