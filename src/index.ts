@@ -1,8 +1,8 @@
-interface IErrorMessages {
+export interface IErrorMessages {
   [key: string]: string;
 }
 
-interface IValidator {
+export interface IValidator {
   (value: any): boolean | string;
 }
 
