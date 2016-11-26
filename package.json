@@ -1,17 +1,24 @@
 {
-  "name": "typescript-starter",
+  "name": "form-validations",
   "version": "0.0.1",
-  "description": "typescript boilerplate project",
+  "description": "Form validation done right",
   "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
   "author": "Marvin Hagemeister <marvin@marvinhagemeister.de>",
   "license": "MIT",
+  "keywords": [
+    "form",
+    "validation"
+  ],
   "scripts": {
-    "lint": "tslint src/",
+    "clean": "rimraf dist/",
+    "lint": "tslint 'src/**/*.ts'",
     "watch": "tsc -w",
-    "build": "tsc",
+    "build": "npm run clean && tsc && node scripts/prepare-typings.js",
     "test": "mocha --compilers ts:ts-node/register 'src/**/__tests__/*.spec.ts'",
     "test-watch": "npm t -- -w -R min",
-    "coverage": "nyc npm t"
+    "coverage": "nyc npm t",
+    "prepublish": "npm run lint && npm t && npm run build"
   },
   "dependencies": {},
   "devDependencies": {
@@ -20,6 +27,7 @@
     "chai": "^3.5.0",
     "mocha": "^3.1.2",
     "nyc": "^10.0.0",
+    "rimraf": "^2.5.4",
     "ts-node": "^1.6.1",
     "tslint": "^3.15.1",
     "typescript": "^2.0.7"
