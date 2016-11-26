@@ -6,6 +6,10 @@
   "typings": "dist/index.d.ts",
   "author": "Marvin Hagemeister <marvin@marvinhagemeister.de>",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:marvinhagemeister/form-validations.git"
+  },
   "keywords": [
     "form",
     "validation"
