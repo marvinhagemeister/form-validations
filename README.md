@@ -20,7 +20,7 @@ isString(1234); // Returns: ["not a string"]
 A more complex example with chained validations:
 
 ```js
-import { chain, validString } from "form-validations";
+import { chain, firstError, validString } from "form-validations";
 
 const isString = validString("not a string");
 
@@ -33,10 +33,15 @@ function isHello(value) {
   return true;
 };
 
+// Collect all errors
 const validate = chain(isString, isHello);
 
 validate("hello world!"); // Returns: []. No errors means field is valid
 validate(1234); // Returns: ["not a string", "value does not contain 'hello'"]
+
+// Stop on first error
+const validate = firstError(isString, isHello);
+validate(1234); // Returns: ["not a string"]
 ```
 
 This library was built to allow easy chaining of validations.
@@ -48,55 +53,25 @@ This library was built to allow easy chaining of validations.
 Easily chain validators together. Each validator can push an error message
 to the resulting array.
 
-Example:
-
-```js
-import { chain, required, validString } from "form-validations";
-
-// Build validators. Custom message is optional.
-const isString = validString("Nope this is not a string");
-const isRequired = required("This field is required");
-
-const validator = chain(isRequired, isString);
-
-validator(1234); // Returns ["Nope this is not a string"];
-validator(null); // Returns ["This field is required", "Nope this is not a string"];
-```
-
 ### `firstError(...validators): string[]`
 
 Contrary to `chain` this function will stop at the first validator that returns
 an error. The resulting string array will always have a length of 1.
 
-Example:
-
-```js
-import { firstError, oneOf, required, validString } from "form-validations";
-
-// Build validators
-const isRelationship = oneOf(["single", "family"])
-const isString = validString(); // You can use validators without a custom error message
-const isRequired = required();
-
-const validator = firstError(isRequired, isString, isRelationship);
-
-validator(null); // Returns ["This field is required"];
-```
-
 ### Available validations
 
 Each validation function must return either `true` or an error message of type `string`.
 
-| Validation | description |
+| Validation | Check if |
 |---|---|
-| `validString` | Checks if the received value of type `string` |
-| `validNumber` | Checks if the received value of type `number` |
-| `validBool` | Checks if the received value of type `boolean` |
-| `validDateFormat` | Checks if the received value is a string with the format: `YYYY-MM-DD` |
-| `validDateTimeFormat` | Checks if the received value is a string with the format: `YYYY-MM-DD hh:mm:ss` |
-| `validDateUTCFormat` | Checks if the received value is a string with the format: `YYYY-MM-DDThh:mm:ssZ` |
-| `oneOf` | Checks if the received value is inside the array |
-| `required` | Checks if the received value is not empty, `undefined` or `null`|
+| `validString` | ...value is a `string` |
+| `validNumber` | ...value is a `number` |
+| `validBool` | ...value is a `boolean` |
+| `validDateFormat` | ...value has format: `YYYY-MM-DD` |
+| `validDateTimeFormat` | ...value has format: `YYYY-MM-DD hh:mm:ss` |
+| `validDateUTCFormat` | ...value has format `YYYY-MM-DDThh:mm:ssZ` |
+| `oneOf` | ...value is inside the specified array |
+| `required` | ...value is not empty, `undefined` or `null`|
 
 ### Available normalizers
 
