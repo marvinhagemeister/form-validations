@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/marvinhagemeister/form-validations.svg?branch=master)](https://travis-ci.org/marvinhagemeister/form-validations) [![NPM version](http://img.shields.io/npm/v/form-validations.svg)](https://www.npmjs.org/package/form-validations)
+
 # Form validation in 1KB
 
 A library that makes form validation fun again. When trying out various different
