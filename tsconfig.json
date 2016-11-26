@@ -4,13 +4,14 @@
     "target": "es6",
     "noImplicitAny": true,
     "sourceMap": true,
-    "outDir": "dist/"
+    "pretty": true,
+    "outDir": "dist/",
+    "declaration": true
   },
   "exclude": [
     "node_modules"
   ],
   "files": [
-    "./typings/index.d.ts",
     "./src/index.ts"
   ]
 }
