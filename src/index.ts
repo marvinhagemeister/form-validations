@@ -1,3 +1,15 @@
+import {
+  isBool,
+  isEmpty,
+  isFormatDate,
+  isFormatDateTime,
+  isFormatDateUTC,
+  isNullOrUndef,
+  isNumber,
+  isString,
+  isUndef
+} from "type-checks";
+
 export interface IErrorMessages {
   [key: string]: string;
 }
@@ -30,20 +42,6 @@ export function firstError(...args: IValidator[]) {
   };
 }
 
-export const isUndef = (val: any) => typeof val === "undefined";
-export const isNull = (val: any) => val === null;
-export const isNullOrUndef = (val: any) => isNull(val) || isUndef(val);
-export const isString = (val: any) => typeof val === "string" || val instanceof String;
-export const isNumber = (val: any) => typeof val === "number";
-export const isBool = (val: any) => typeof val === "boolean";
-export const isDate = (val: any) => /^\d{4}-\d{2}-\d{2}$/g.test(val);
-export const isDateTime = (val: any) => /^\d{4}-\d{2}-\d{2}\s\d{2}:\d{2}:\d{2}$/g.test(val);
-export const isDateUTC = (val: any) => /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}Z$/g.test(val);
-export const isEmpty = (val: any) =>
-  (Object.keys(val).length === 0 && val.constructor === Object)
-  || (Array.isArray(val) && val.length === 0)
-  || (isString(val) && val.length === 0);
-
 const messages: IErrorMessages = {
   string: " is not of type string",
   number: " is not of type number",
@@ -73,13 +71,13 @@ export function validBool(err?: string): IValidator {
   return val => isBool(val) ? true : msg(err, val, "bool");
 }
 export function validDateFormat(err?: string): IValidator {
-  return val => isString(val) && isDate(val) ? true : msg(err, val, "date");
+  return val => isString(val) && isFormatDate(val) ? true : msg(err, val, "date");
 }
 export function validDateTimeFormat(err?: string): IValidator {
-  return val => isString(val) && isDateTime(val) ? true : msg(err, val, "dateTime");
+  return val => isString(val) && isFormatDateTime(val) ? true : msg(err, val, "dateTime");
 }
 export function validDateUTCFormat(err?: string): IValidator {
-  return val => isString(val) && isDateUTC(val) ? true : msg(err, val, "dateUTC");
+  return val => isString(val) && isFormatDateUTC(val) ? true : msg(err, val, "dateUTC");
 }
 export function oneOf(arr: any[], err?: string): IValidator {
   return val => !isUndef(arr.find(item => item === val)) ? true : msgArr(err, val, arr);

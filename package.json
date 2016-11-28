@@ -24,7 +24,9 @@
     "coverage": "nyc npm t",
     "prepublish": "npm run lint && npm t && npm run build"
   },
-  "dependencies": {},
+  "dependencies": {
+    "type-checks": "^1.1.0"
+  },
   "devDependencies": {
     "@types/chai": "^3.4.34",
     "@types/mocha": "^2.2.33",
